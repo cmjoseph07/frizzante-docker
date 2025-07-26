@@ -1,0 +1,15 @@
+services:
+  frizzante:
+    build:
+      context: .
+      target: frizzante_dev
+    environment:
+      APP_ENV: ${APP_ENV:-dev}
+      DATABASE_URL: ${DATABASE_URL:-}
+    ports:
+      - target: 8080
+        published: ${HTTP_PORT:-8080}
+        protocol: tcp
+    volumes:
+      - ./:/app
+      - /app/.gen
