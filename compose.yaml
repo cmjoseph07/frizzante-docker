@@ -3,6 +3,7 @@ services:
     build:
       context: .
       target: frizzante_dev
+    container_name: frizzante-dev
     environment:
       APP_ENV: ${APP_ENV:-dev}
       DATABASE_URL: ${DATABASE_URL:-}

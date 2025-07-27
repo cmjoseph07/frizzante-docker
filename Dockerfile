@@ -8,6 +8,9 @@ WORKDIR /app
 # Install build-essential
 RUN apt-get update && apt-get install -y build-essential
 
+# Disable VCS
+RUN go env -w GOFLAGS="-buildvcs=false"
+
 # Install frizzante
 RUN go install github.com/razshare/frizzante@latest
 
