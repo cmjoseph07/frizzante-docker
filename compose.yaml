@@ -6,10 +6,11 @@ services:
     environment:
       APP_ENV: ${APP_ENV:-dev}
       DATABASE_URL: ${DATABASE_URL:-}
+    extra_hosts:
+      - host.docker.internal:host-gateway
     ports:
-      - target: 8080
-        published: ${HTTP_PORT:-8080}
-        protocol: tcp
+      - 8080:8080
+    tty: true
     volumes:
       - ./:/app
       - /app/.gen
