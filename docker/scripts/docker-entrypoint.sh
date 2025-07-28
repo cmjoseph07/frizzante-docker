@@ -48,7 +48,7 @@ if [ ! -f go.mod ]; then
 		PLATFORM="${OS}/${ARCH}"
 		
 		echo "Detected platform: $PLATFORM"
-		frizzante --configure --platform="$PLATFORM"
+		frizzante --configure --platform="$PLATFORM" -y
 		echo "Dependencies installed successfully!"
 
     # Wait for database

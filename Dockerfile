@@ -24,3 +24,32 @@ FROM frizzante_base AS frizzante_dev
 
 # Development command - entrypoint will handle initialization
 CMD ["make", "dev"]
+
+# Build stage for production
+FROM frizzante_base AS frizzante_build
+
+# Create non-root user for production
+RUN useradd -u 1001 nonroot
+
+# Copy all source files
+COPY . .
+
+# Build the production binary using frizzante
+RUN frizzante --build
+
+# Production image using scratch
+FROM scratch AS frizzante_prod
+
+WORKDIR /
+
+# Copy the binary
+COPY --from=frizzante_build /app/.gen/bin/app /frizzante
+
+# Use non-root user
+USER nonroot
+
+# Expose port
+EXPOSE 8080
+
+# Run the binary
+CMD ["/frizzante"]
