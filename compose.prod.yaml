@@ -7,5 +7,5 @@ services:
     container_name: frizzante_prod
     environment:
       APP_ENV: prod
-      APP_SECRET: ${APP_SECRET}
+      # Pass any environment variables here as needed
     restart: unless-stopped

@@ -16,6 +16,7 @@ RUN go install github.com/razshare/frizzante@latest
 
 # Copy configuration files
 COPY --link --chmod=755 docker/scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link --chmod=755 docker/scripts/build-check.sh /usr/local/bin/build-check
 
 ENTRYPOINT ["docker-entrypoint"]
 
@@ -34,8 +35,8 @@ RUN useradd -u 1001 nonroot
 # Copy all source files
 COPY . .
 
-# Build the production binary using frizzante
-RUN frizzante --build
+# Build the production binary using frizzante with validation
+RUN build-check
 
 # Production image using scratch
 FROM scratch AS frizzante_prod
