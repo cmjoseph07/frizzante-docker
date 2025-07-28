@@ -30,26 +30,8 @@ if [ ! -f go.mod ]; then
 		
 		echo "Frizzante project created successfully!"
 		
-		# Detect platform
-		OS=$(uname -s)
-		ARCH=$(uname -m)
-		
-		# Map architecture names
-		case "$ARCH" in
-			x86_64)
-				ARCH="amd64"
-				;;
-			aarch64|arm64)
-				ARCH="arm64"
-				;;
-		esac
-		
-		# Set platform string
-		PLATFORM="${OS}/${ARCH}"
-		
-		echo "Detected platform: $PLATFORM"
-		frizzante --configure --platform="$PLATFORM" -y
-		echo "Dependencies installed successfully!"
+		# Install dependencies using shared script
+		. /usr/local/bin/install-deps
 
     # Wait for database
     # TODO: Advice to stop project and run docker-compose up --build --wait for database

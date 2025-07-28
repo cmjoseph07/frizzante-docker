@@ -17,6 +17,7 @@ RUN go install github.com/razshare/frizzante@latest
 # Copy configuration files
 COPY --link --chmod=755 docker/scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 COPY --link --chmod=755 docker/scripts/build-check.sh /usr/local/bin/build-check
+COPY --link --chmod=755 docker/scripts/install-deps.sh /usr/local/bin/install-deps
 
 ENTRYPOINT ["docker-entrypoint"]
 
@@ -38,10 +39,13 @@ COPY . .
 # Build the production binary using frizzante with validation
 RUN build-check
 
-# Production image using scratch
-FROM scratch AS frizzante_prod
+# Production image using distroless with C++ libraries
+FROM gcr.io/distroless/cc-debian12:latest AS frizzante_prod
 
 WORKDIR /
+
+# Copy passwd file to enable nonroot user
+COPY --from=frizzante_build /etc/passwd /etc/passwd
 
 # Copy the binary
 COPY --from=frizzante_build /app/.gen/bin/app /frizzante
