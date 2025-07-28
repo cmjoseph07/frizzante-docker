@@ -1,34 +1,84 @@
 # Git
-.git
+.git/
 .gitignore
+.gitattributes
+.github/
 
 # Development
 .gen/
 .vite/
-node_modules/
-app/node_modules/
-*.log
+**/node_modules/
+**/*.log
+*.log.*
+logs/
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+.*.swp
+.*.swo
 
 # OS
 .DS_Store
 Thumbs.db
+*.tmp
 
 # Documentation
-README.md
+*.md
 LICENSE
+docs/
+*.txt
 
 # Build artifacts
-app/dist/
+**/dist/
+build/
+out/
 *.tar.gz
 *.zip
+*.tar
+*.tgz
 
-# Development configs that aren't needed in container
+# Test artifacts
+coverage/
+.nyc_output/
+*.test
+*.spec
+
+# Development configs
 .air.toml
-.env.local
-.env.development 
+.env*
+!.env.example
+*.local
+
+# Docker files (prevent recursive builds)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# CI/CD
+.circleci/
+.travis.yml
+.gitlab-ci.yml
+
+# Temporary files
+tmp/
+temp/
+*.bak
+*.backup
+*.old
+
+# Go specific
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
+
+# Cache directories
+.cache/
+*.cache 
