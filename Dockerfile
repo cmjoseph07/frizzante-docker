@@ -22,17 +22,18 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     go install github.com/razshare/frizzante@latest
 
 # Copy configuration files
-COPY --link --chmod=755 docker/scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-COPY --link --chmod=755 docker/scripts/build-check.sh /usr/local/bin/build-check
-COPY --link --chmod=755 docker/scripts/install-deps.sh /usr/local/bin/install-deps
+COPY --link --chmod=755 docker/scripts/main.sh /usr/local/bin/main
+COPY --link --chmod=755 docker/scripts/welcome.sh /usr/local/bin/welcome
+COPY --link --chmod=755 docker/scripts/lib/check.sh /usr/local/bin/lib/check
+COPY --link --chmod=755 docker/scripts/lib/install.sh /usr/local/bin/lib/install
 
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["main"]
 
 # Dev frizzante image
 FROM frizzante_base AS frizzante_dev
 
 # Development command - entrypoint will handle initialization
-CMD ["make", "dev"]
+CMD ["welcome"]
 
 # Build stage for production
 FROM frizzante_base AS frizzante_build

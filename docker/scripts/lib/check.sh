@@ -16,7 +16,7 @@ if [ ! -f go.mod ]; then
 fi
 
 # Install dependencies using shared script
-. /usr/local/bin/install-deps
+. lib/install
 
 # Build the production binary
 exec frizzante --build

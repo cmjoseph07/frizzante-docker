@@ -21,7 +21,7 @@ if [ ! -f go.mod ]; then
 		echo "Frizzante project created successfully!"
 		
 		# Install dependencies using shared script
-		. /usr/local/bin/install-deps
+		. lib/install
 fi
 
 exec "$@"
