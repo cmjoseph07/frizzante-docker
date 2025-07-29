@@ -3,7 +3,6 @@ services:
     build:
       context: .
       target: frizzante_dev
-    container_name: frizzante_dev_delve
     environment:
       DELVE_ENABLED: ${DELVE_ENABLED:-false}
       DELVE_PORT: ${DELVE_PORT:-2345}
