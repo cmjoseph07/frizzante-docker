@@ -31,16 +31,6 @@ ENTRYPOINT ["docker-entrypoint"]
 # Dev frizzante image
 FROM frizzante_base AS frizzante_dev
 
-# Install Delve debugger if enabled (build arg)
-ARG DELVE_ENABLED=false
-RUN --mount=type=cache,target=/go/pkg/mod \
-    --mount=type=cache,target=/root/.cache/go-build \
-    if [ "$DELVE_ENABLED" = "true" ]; then \
-        echo "Installing Delve debugger..." && \
-        go install github.com/go-delve/delve/cmd/dlv@latest && \
-        echo "Delve installed successfully!"; \
-    fi
-
 # Development command - entrypoint will handle initialization
 CMD ["make", "dev"]
 
