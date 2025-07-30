@@ -8,7 +8,7 @@
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+).
 1. Clone this project.
    ```sh
-   git clone git@github.com:cmjoseph07/frizzante-docker.git
+   git clone git@github.com:cmjoseph07/frizzante-docker.git && cd frizzante-docker
    ```
 1. Build fresh images.
    ```sh
