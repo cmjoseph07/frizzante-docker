@@ -7,7 +7,7 @@
 
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+) and clone this project.
 2. Run `docker compose build --pull --no-cache` to build fresh images.
-3. Run `docker compose up --wait` to set up and start a fresh Frizzante project, subsequent runs of this command will simply start the dev env. 
+3. Run `docker compose up` to set up and start a fresh Frizzante project, subsequent runs of this command will simply start the dev env. 
 4. Run `docker compose down --remove-orphans` to stop the Docker containers.
 
 ## ⚡️ Features
