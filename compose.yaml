@@ -2,10 +2,10 @@ services:
   frizzante:
     build:
       context: .
-      target: frizzante_dev
-    container_name: frizzante-dev
+      target: frizzante_start
+    container_name: frizzante-start
     environment:
-      APP_ENV: ${APP_ENV:-dev}
+      DEV: ${DEV:-}
       DATABASE_URL: ${DATABASE_URL:-}
     extra_hosts:
       - host.docker.internal:host-gateway

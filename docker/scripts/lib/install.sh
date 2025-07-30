@@ -23,8 +23,6 @@ PLATFORM="${OS}/${ARCH}"
 echo "Detected platform: $PLATFORM"
 
 # Install dependencies if not already done
-if [ ! -d ".gen/bun" ]; then
-    echo "Installing frizzante dependencies..."
-    frizzante --configure --platform="$PLATFORM" -y
-    echo "Dependencies installed successfully!"
-fi
+which .gen/bun/bun || frizzante --add="bun" --platform="$PLATFORM" -y
+which .gen/air/air || frizzante --add="air" --platform="$PLATFORM" -y
+test -d app/node_modules || frizzante --install

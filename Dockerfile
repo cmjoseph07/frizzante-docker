@@ -23,17 +23,17 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 
 # Copy configuration files
 COPY --link --chmod=755 docker/scripts/main.sh /usr/local/bin/main
-COPY --link --chmod=755 docker/scripts/welcome.sh /usr/local/bin/welcome
+COPY --link --chmod=755 docker/scripts/start.sh /usr/local/bin/start
 COPY --link --chmod=755 docker/scripts/lib/check.sh /usr/local/bin/lib/check
 COPY --link --chmod=755 docker/scripts/lib/install.sh /usr/local/bin/lib/install
 
 ENTRYPOINT ["main"]
 
-# Dev frizzante image
-FROM frizzante_base AS frizzante_dev
+# Start frizzante image
+FROM frizzante_base AS frizzante_start
 
-# Development command - entrypoint will handle initialization
-CMD ["welcome"]
+# Start command - entrypoint will handle initialization
+CMD ["start"]
 
 # Build stage for production
 FROM frizzante_base AS frizzante_build
@@ -56,7 +56,7 @@ COPY --link . .
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/app/.gen/cache \
-    build-check
+    check
 
 # Production image using distroless with C++ libraries
 FROM gcr.io/distroless/cc-debian12:latest AS frizzante_prod
