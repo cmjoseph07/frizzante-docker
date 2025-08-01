@@ -37,6 +37,26 @@
 > However, this docker project doesn't integrate with [Go Delve](https://github.com/go-delve/delve) for various reasons, 
 > hence you won't be able to debug your application out of the box if you choose to develop this way.
 
+## 🚀 Production with Docker
+
+**Option 1: Build and run production binary inside container**
+```sh
+# Inside the container
+make build
+./.gen/bin/app
+```
+
+**Option 2: Build production Docker image**
+```sh
+docker build --target frizzante_prod -t my-app:prod .
+docker run -p 8080:8080 my-app:prod
+```
+
+**Option 3: Use Docker Compose for production**
+```sh
+docker compose -f compose.yaml -f compose.prod.yaml up -d --build
+```
+
 ## ⚡️ Features
 
 * Prod, Dev, and CI ready
