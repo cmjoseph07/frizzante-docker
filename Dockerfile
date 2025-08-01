@@ -61,13 +61,16 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 # Production image using distroless with C++ libraries
 FROM gcr.io/distroless/cc-debian12:latest AS frizzante_prod
 
-WORKDIR /
+WORKDIR /app
 
 # Copy passwd file to enable nonroot user
 COPY --from=frizzante_build /etc/passwd /etc/passwd
 
+# Create .gen directory with proper permissions for nonroot user
+COPY --from=frizzante_build --chown=nonroot:nonroot /app/.gen /app/.gen
+
 # Copy the binary
-COPY --from=frizzante_build /app/.gen/bin/app /frizzante
+COPY --from=frizzante_build /app/.gen/bin/app /app/frizzante
 
 # Use non-root user
 USER nonroot
@@ -76,4 +79,4 @@ USER nonroot
 EXPOSE 8080
 
 # Run the binary
-CMD ["/frizzante"]
+CMD ["/app/frizzante"]
