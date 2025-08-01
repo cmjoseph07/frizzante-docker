@@ -56,7 +56,7 @@ COPY --link . .
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/app/.gen/cache \
-    check
+    /usr/local/bin/lib/check
 
 # Production image using distroless with C++ libraries
 FROM gcr.io/distroless/cc-debian12:latest AS frizzante_prod
