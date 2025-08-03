@@ -12,14 +12,16 @@ if [ ! -f go.mod ]; then
 		# Move the created project files to the root
 		if [ -d "tmp" ]; then
 			cd tmp
-			cp -Rp . ..
+			find . -mindepth 1 -maxdepth 1 ! -name "README.md" -exec cp -Rp {} .. \;
 			cd ..
 			rm -rf tmp/
 		fi
 
 		echo "Frizzante project created successfully!"
 
-		chmod -R 0755 .
+		# Set permissions excluding .git directory
+		find . -path ./.git -prune -o -type f -exec chmod 0644 {} \;
+		find . -path ./.git -prune -o -type d -exec chmod 0755 {} \;
 fi
 
 # Install dependencies using shared script
