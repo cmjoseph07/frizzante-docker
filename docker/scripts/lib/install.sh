@@ -22,7 +22,9 @@ PLATFORM="${OS}/${ARCH}"
 
 echo "Detected platform: $PLATFORM"
 
-# Install dependencies if not already done
+# Configure bun and air if they're missing
 which .gen/bun/bun || frizzante --add="bun" --platform="$PLATFORM" -y
 which .gen/air/air || frizzante --add="air" --platform="$PLATFORM" -y
-test -d app/node_modules || frizzante --install
+
+# Install Go and JavaScript dependencies
+frizzante --install
