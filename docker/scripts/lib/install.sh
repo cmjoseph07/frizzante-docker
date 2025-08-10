@@ -22,9 +22,5 @@ PLATFORM="${OS}/${ARCH}"
 
 echo "Detected platform: $PLATFORM"
 
-# Configure bun and air if they're missing
-which .gen/bun/bun || frizzante --add="bun" --platform="$PLATFORM" -y
-which .gen/air/air || frizzante --add="air" --platform="$PLATFORM" -y
-
-# Install Go and JavaScript dependencies
-frizzante --install
+# Configure project and install dependencies.
+FRIZZANTE_USING_DOCKER=1 frizzante --configure --platform="$PLATFORM" -y

@@ -27,7 +27,4 @@ fi
 # Install dependencies using shared script
 . /usr/local/bin/lib/install
 
-# Touch app/dist
-FRIZZANTE_USING_DOCKER=1 frizzante --touch
-
 exec "$@"
