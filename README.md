@@ -16,7 +16,7 @@
    ```
 1. Create a fresh Frizzante project and start the container.
    ```sh
-   docker compose up -d
+   docker compose up
    ```
    Subsequent runs of this command will simply start the container.
 1. Attach to the container with your IDE or with your shell.
@@ -42,7 +42,7 @@
 **Option 1: Build and run production binary inside container**
 ```sh
 # Inside the container
-make build
+frizzante --build
 ./.gen/bin/app
 ```
 
