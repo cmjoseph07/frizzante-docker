@@ -4,7 +4,7 @@ FROM golang:1.24.5-bookworm AS frizzante_upstream
 # Base Frizzante image
 FROM frizzante_upstream AS frizzante_base
 
-WORKDIR /app
+WORKDIR /frizzante
 
 # Install build-essential with cache mount
 RUN --mount=type=cache,target=/var/cache/apt \
@@ -24,8 +24,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 # Copy configuration files
 COPY --link --chmod=755 docker/scripts/main.sh /usr/local/bin/main
 COPY --link --chmod=755 docker/scripts/start.sh /usr/local/bin/start
-COPY --link --chmod=755 docker/scripts/lib/check.sh /usr/local/bin/lib/check
-COPY --link --chmod=755 docker/scripts/lib/install.sh /usr/local/bin/lib/install
+COPY --link --chmod=755 docker/scripts/build.sh /usr/local/bin/build
 
 ENTRYPOINT ["main"]
 
@@ -55,22 +54,22 @@ COPY --link . .
 # Build the production binary with cache mounts
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
-    --mount=type=cache,target=/app/.gen/cache \
-    /usr/local/bin/lib/check
+    --mount=type=cache,target=//frizzante/.gen/cache \
+    /usr/local/bin/build
 
 # Production image using distroless with C++ libraries
 FROM gcr.io/distroless/cc-debian12:latest AS frizzante_prod
 
-WORKDIR /app
+WORKDIR /frizzante
 
 # Copy passwd file to enable nonroot user
 COPY --from=frizzante_build /etc/passwd /etc/passwd
 
 # Create .gen directory with proper permissions for nonroot user
-COPY --from=frizzante_build --chown=nonroot:nonroot /app/.gen /app/.gen
+COPY --from=frizzante_build --chown=nonroot:nonroot /frizzante/.gen /frizzante/.gen
 
 # Copy the binary
-COPY --from=frizzante_build /app/.gen/bin/app /app/frizzante
+COPY --from=frizzante_build /frizzante/.gen/bin/app /frizzante/server
 
 # Use non-root user
 USER nonroot
@@ -79,4 +78,4 @@ USER nonroot
 EXPOSE 8080
 
 # Run the binary
-CMD ["/app/frizzante"]
+CMD ["/app/server"]

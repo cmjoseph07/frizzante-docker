@@ -7,7 +7,7 @@ if [ ! -f go.mod ]; then
 		rm -rf tmp/
 
 		# Create a new Frizzante project
-		FRIZZANTE_USING_DOCKER=1 frizzante -c tmp
+		frizzante -y -c tmp
 
 		# Move the created project files to the root
 		if [ -d "tmp" ]; then
@@ -24,7 +24,8 @@ if [ ! -f go.mod ]; then
 		find . -path ./.git -prune -o -type d -exec chmod 0755 {} \;
 fi
 
-# Install dependencies using shared script
-. /usr/local/bin/lib/install
+# Configure project.
+test -d .gen/air || frizzante -y --configure
+test -d .gen/bun || frizzante -y --configure
 
 exec "$@"

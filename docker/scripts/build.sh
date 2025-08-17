@@ -3,7 +3,7 @@ set -e
 
 # Check if this is a valid Go project before attempting to build
 if [ ! -f go.mod ]; then
-    echo "ERROR: No go.mod found in /app directory."
+    echo "ERROR: No go.mod found in /frizzante directory."
     echo "Cannot build production binary without a valid Go project."
     echo ""
     echo "To create a production build:"
@@ -15,8 +15,9 @@ if [ ! -f go.mod ]; then
     exit 1
 fi
 
-# Install dependencies using shared script
-. /usr/local/bin/lib/install
+# Configure project.
+test -d .gen/air || frizzante -y
+test -d .gen/bun || frizzante -y
 
 # Build the production binary
-exec frizzante --build
+exec frizzante -y --build
