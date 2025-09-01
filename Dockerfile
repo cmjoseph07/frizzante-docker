@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM golang:1.24.5-bookworm AS frizzante_upstream
+FROM golang:1.25.0-bookworm AS frizzante_upstream
 
 # Base Frizzante image
 FROM frizzante_upstream AS frizzante_base
@@ -19,7 +19,7 @@ RUN go env -w GOFLAGS="-buildvcs=false"
 # Install frizzante with Go module cache
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
-    go install github.com/razshare/frizzante@latest
+    go run github.com/razshare/frizzante/setup/install@latest
 
 # Copy configuration files
 COPY --link --chmod=755 docker/scripts/main.sh /usr/local/bin/main
